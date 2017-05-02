@@ -32,7 +32,8 @@ class ProxyXici(threading.Thread):
         for item in items:
             tds = re.findall(tdpattern, item)
             if (len(tds) > 4):
-                self.rawProxyList.append((tds[2], tds[3]))
+                print tds[1] + " " + tds[2]
+                self.rawProxyList.append((tds[1], tds[2]))
 
     def run(self):
         for url in urls:

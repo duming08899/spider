@@ -25,8 +25,8 @@ class ProxyCheck(threading.Thread):
         threading.Thread.__init__(self)
         self.proxyList = proxyList
         self.timeout = 5
-        self.testUrl = "http://weixin.sogou.com/"
-        self.testStr = "一搜即达"
+        self.testUrl = "http://www.baidu.com/"
+        self.testStr = "baidu"
 
     def checkProxy(self):
         RedisUtils.flush()
@@ -34,8 +34,7 @@ class ProxyCheck(threading.Thread):
         for proxy in self.proxyList:
             proxyHandler = urllib2.ProxyHandler({"http": r'http://%s:%s' % (proxy[0], proxy[1])})
             opener = urllib2.build_opener(cookies, proxyHandler)
-            opener.addheaders = [
-                ('User-agent', 'Mozilla/5.0 (Windows NT 6.2; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0')]
+            opener.addheaders = [('User-agent', 'Mozilla/5.0 (Windows NT 6.2; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0')]
             t1 = time.time()
             try:
                 req = opener.open(self.testUrl, timeout=self.timeout)
@@ -73,9 +72,9 @@ def getProxyProcess():
         getThreads[i].join()
 
     rawProxyList.extend(xici.rawProxyList)
-    rawProxyList.extend(youdaili.rawProxyList)
-    rawProxyList.extend(kuaidaili.rawProxyList)
-    rawProxyList.extend(ip002.rawProxyList)
+    #rawProxyList.extend(youdaili.rawProxyList)
+    #rawProxyList.extend(kuaidaili.rawProxyList)
+    #rawProxyList.extend(ip002.rawProxyList)
     ips = list(set(rawProxyList))
     logger.info('.' * 10 + "总共抓取了%s个代理" % len(ips) + '.' * 10)
 
